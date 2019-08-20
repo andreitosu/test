@@ -1,20 +1,47 @@
 #include <iostream>
 #include <memory>
-#include "LigaAtuomatica.h"
+#include <thread>
+#include "firstPocess/firstProcess.h"
+#include "secondProcess.h"
+
+std::shared_ptr<int> sharedInt;
+
+void oneThread(){
+    auto i = 0;
+    while (i< 2000000)
+    {
+        std::cout << "Functie 1 : " << i << std::endl;
+        i++;
+    }
+    
+    std::cout << "First Thread" << std::endl;
+}
+
+void secondThread(int x){
+    while (x < 1000000)
+    {
+        std::cout << "Functie 2 : " << x << std::endl;
+        x++;
+    }
+    std::cout << "Second Thread" << std::endl;
+}
+
+void threadsStart(){
+    std::cout << "Threads Start called" << std::endl;
+
+    std::thread first((FirstProcess()));
+    std::thread second((SecondProcess()));
+
+    first.join();
+    second.join();
+
+    std::cout << "Threads stoped" << std::endl;
+}
 
 int main(){
     std::cout << "Hello Test" << std::endl;
 
-    std::vector<std::unique_ptr<ONG>> objVector;
-    
-    std::shared_ptr<ONG> asoc(new StudentAsociation);
-
-    objVector.emplace_back(new StudentAsociation());
-    objVector.emplace_back(new LigaAutomatica());
-
-    for(auto &iter : objVector){
-        iter->addPeople();
-    }
+    threadsStart();
 
     return 0;
 }

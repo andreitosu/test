@@ -6,8 +6,9 @@ class StudentAsociation : public ONG {
 public:
 
     StudentAsociation(){
-
+        std::cout << "Student aspociation created" << std::endl;
     }
+
     void addPeople(){
         std::cout << "Student Asociation" << std::endl;
     }
